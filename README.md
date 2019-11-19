@@ -1,25 +1,25 @@
 # reactproject
 
-open up a command prompt and activate the below commands to run the django server
+a)open up a command prompt and activate the below commands to run the django server
 
-git clone https://github.com/yuong1979/reactproject.git
+1)git clone https://github.com/yuong1979/reactproject.git
 
-cd reactproject
+2)cd reactproject
 
-scripts\activate
+3)scripts\activate
 
-cd src
+4)cd src
 
-python manage.py runserver
+5)python manage.py runserver
 
 
 
-open up another command prompt and use the below commands to run the react server
+b)open up another command prompt and use the below commands to run the react server
 
-cd reactproject
+1)cd reactproject
 
-scripts\activate
+2)scripts\activate
 
-cd src
+3)cd src
 
-npm run dev
+4)npm run dev
