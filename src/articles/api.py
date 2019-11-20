@@ -43,6 +43,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
 
+	permission_classes = [
+		permissions.AllowAny
+		# permissions.IsAuthenticated
+		# permissions.IsAdminUser
+	]
 
 
 
@@ -82,6 +87,7 @@ class BlogViewSet(viewsets.ModelViewSet):
 
 		else:
 			return None
+
 
 
 

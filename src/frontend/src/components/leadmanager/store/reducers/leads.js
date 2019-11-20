@@ -12,24 +12,8 @@ export default function (state = initialState, action ) {
 
 	switch (action.type) {
 
-		case GET_TESTS:
-
-		// console.log("reducers", "get_test", initialState, action.payload)
-
-		//this function takes in two things, state and actions so you return state and actions based on the action type
-
-		return {
-
-			//the state is returned with the spread operator[...] because you want to return all the items inside the state, including leads
-			...state,
-			// on top of all those taht are already in the state, you want to add updated leads that are fetched from the server - sent as a payload with below
-			leads: action.payload
-		}
-
-
-
-
 		case GET_LEADS:
+
 		return {
 			...state,
 			leads: action.payload
@@ -57,3 +41,17 @@ export default function (state = initialState, action ) {
 
 
 }
+
+
+
+
+
+
+		// case GET_TESTS:
+		// //this function takes in two things, state and actions so you return state and actions based on the action type
+		// return {
+		// 	//the state is returned with the spread operator[...] because you want to return all the items inside the state, including leads
+		// 	...state,
+		// 	// on top of all those taht are already in the state, you want to add updated leads that are fetched from the server - sent as a payload with below
+		// 	leads: action.payload
+		// }

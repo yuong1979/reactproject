@@ -11,6 +11,7 @@ const initialState = {
 }
 
 
+
 export default function(state = initialState, action) {
 
 	switch (action.type){
@@ -24,7 +25,7 @@ export default function(state = initialState, action) {
 		case AUTH_SUCCESS:
 			return {
 				...state,
-				// ...action.token,
+				...action.token,
 				token: action.token,
 				error: null,
 				loading: false,
@@ -33,13 +34,12 @@ export default function(state = initialState, action) {
 		case AUTH_FAIL:
 			return {
 				...state,
-				// ...action.error,
+				...action.error,
 				error: action.error,
 				loading: false,
 			}
 
 		case AUTH_LOGOUT:
-			console.log('log out')
 			return {
 				...state,
 				token: null,

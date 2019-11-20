@@ -3,35 +3,57 @@ import axios from 'axios';
 
 // import { tokenConfig } from './auth'
 
-import { GET_BLOG, DELETE_BLOG, ADD_BLOG } from './actionTypes'
+import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG } from './actionTypes'
 
 
 
-// GET LEADS
 
-export const getBlog = () => (dispatch, getState) => {
+
+// setup config with token - helper function
+
+export const tokenConfig = getState => {
+
+
+	// get token from the state
+	const token = getState().auth.token
+
+
+	//headers
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}
+
+	//if token exists, add to headers
+	if (token) {
+		config.headers['Authorisation'] = `Token ${token}`;
+
+	}
+
+	return config
+
+}
+
+
+
+// GET BLOGSLIST
+
+export const getBlogList = () => (dispatch, getState) => {
 
 	axios.get('/api/blog/', tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
-
-			type: GET_BLOG,
+			type: GET_BLOG_LIST,
 			payload: res.data
-
 		})
-
-		// console.log(res)
 	})
 
 	.catch(err => {
 
 		console.log(err)
-
-		console.log("getblog", err)
-
 		// dispatch(returnErrors(err.response.data, err.response.status));
-
 		// dispatch({
 		// 	type: REGISTER_FAIL
 		// });
@@ -43,7 +65,34 @@ export const getBlog = () => (dispatch, getState) => {
 
 
 
-// DELETE LEADS
+// GET BLOG
+
+export const getBlog = (id) => (dispatch, getState) => {
+
+	axios.get(`/api/blog/${id}`, tokenConfig(getState))
+	.then(res => {
+
+		dispatch({
+			type: GET_BLOG,
+			payload: res.data
+		})
+	})
+
+	.catch(err => {
+
+		console.log(err)
+		// dispatch(returnErrors(err.response.data, err.response.status));
+		// dispatch({
+		// 	type: REGISTER_FAIL
+		// });
+
+	})
+
+}
+
+
+
+// DELETE BLOGS
 
 export const deleteBlog = (id) => (dispatch, getState) => {
 
@@ -51,7 +100,7 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 	.then(res => {
 
 		dispatch(createMessage({
-			deleteLead: 'Blog Deleted'
+			deleteBlog: 'Blog Deleted'
 
 			}))
 
@@ -68,38 +117,32 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 
 
 
-// ADD LEADS
+// ADD BLOGS
 
-export const addBlog = (lead) => (dispatch, getState) => {
+export const addBlog = (blog) => (dispatch, getState) => {
 
-	axios.post('/api/blog/', lead, tokenConfig(getState))
+	axios.post('/api/blog/', blog, tokenConfig(getState))
 	.then(res => {
-
 
 		// dispatch(createMessage({
 		// 	addLead: 'Blog Added'
 		// 	}))
 
-
 		dispatch({
-
 			type: ADD_BLOG,
 			payload: res.data
-
 		})
+
 	})
 	.catch(err =>
 
 		{
-
-
 			console.log("addblog", err)
 
 			// dispatch(returnErrors(
 			// 	err.response.data, 
 			// 	err.response.status
 			// 	))
-
 
 			// const errors = {
 			// 	msg: err.response.data,
@@ -110,13 +153,54 @@ export const addBlog = (lead) => (dispatch, getState) => {
 			// 	type: GET_ERRORS,
 			// 	payload: errors
 			// })
-
-
 		}
 		);
-
-
-
-
-
 }
+
+
+
+// UPDATE BLOGS
+
+export const updateBlog = (id, data) => (dispatch, getState) => {
+
+	axios.put(`/api/blog/${id}/`, data, tokenConfig(getState))
+	.then(res => {
+
+		// dispatch(createMessage({
+		// 	addLead: 'Blog Added'
+		// 	}))
+
+		dispatch({
+			type: UPDATE_BLOG,
+			payload: res.data
+		})
+
+	})
+	.catch(err =>
+
+			{
+				console.log("update error", err)
+			}
+		);
+}
+
+
+
+
+		// case 'post':
+
+		// 	return axios.post(`http://localhost:8000/api/`,{
+		// 		title: title,
+		// 		content: content
+		// 	})
+		// 	.then(res => console.log(res))
+		// 	.catch(error => console.log(error))
+
+		// case 'put':
+
+		// 	return axios.put(`http://localhost:8000/api/${articleID}/`,{
+		// 		title: title,
+		// 		content: content
+		// 	})
+		// 	.then(res => console.log(res))
+		// 	.catch(error => console.log(error))
