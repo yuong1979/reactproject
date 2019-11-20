@@ -5,22 +5,16 @@ import { Link, Redirect } from 'react-router-dom'
 import { Provider, connect } from 'react-redux'
 import { getBlogList, deleteBlog, addBlog, getBlog } from '../store/actions/Blog'
 import { authCheckState  } from '../store/actions/auth'
-// import CustomForm from './Form'
+import BlogUpdateForm from './BlogUpdateForm'
 
 
 
 class BlogDetail extends Component {
 
-	state = {
-		blog : []
-	}
-
 
 	componentDidMount() {
 
     	this.props.onTryAutoSignup();
-
-		// console.log(this.props.match.params.blogID)
 		const id = this.props.match.params.blogID
 
 		this.props.getBlog(id)
@@ -38,13 +32,11 @@ class BlogDetail extends Component {
 	}
 
 
-
 	render() {
 
 		if (this.props.isAuthenticated === false) {
 			return <Redirect to="/jd/login"/>
 		}
-
 
 
 		return (
@@ -65,6 +57,7 @@ class BlogDetail extends Component {
 					<h5>User: {this.props.blog.user}</h5>
 
 
+					<BlogUpdateForm id={this.props.match.params.blogID} />
 
 				</div>
 		)
@@ -97,22 +90,10 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(BlogDetail)
 
 
-
-
-
-
-
-				// <CustomForm requestType='put' articleID={this.props.match.params.articleID} btnText='update'/>
-
 				// <form onSubmit={this.handleDelete} >
 				// 	<button type="submit">Delete</button>
 				// </form>
 
-
-				// <Link to="/article">Home</Link>
-
-
-
-
 				// <Link to "/">Home</Link>
 
+				// <CustomForm requestType='put' articleID={this.props.match.params.articleID} btnText='update'/>

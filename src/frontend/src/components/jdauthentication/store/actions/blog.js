@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // import { tokenConfig } from './auth'
 
-import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG } from './actionTypes'
+import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG } from './actionTypes'
 
 
 
@@ -69,11 +69,7 @@ export const getBlogList = () => (dispatch, getState) => {
 
 export const getBlog = (id) => (dispatch, getState) => {
 
-	console.log(`/api/blog/${id}`)
-
 	axios.get(`/api/blog/${id}`, tokenConfig(getState))
-
-	// axios.get('/api/blog/', tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
@@ -157,12 +153,54 @@ export const addBlog = (blog) => (dispatch, getState) => {
 			// 	type: GET_ERRORS,
 			// 	payload: errors
 			// })
-
 		}
 		);
-
-
-
-
-
 }
+
+
+
+// UPDATE BLOGS
+
+export const updateBlog = (id, data) => (dispatch, getState) => {
+
+	axios.put(`/api/blog/${id}/`, data, tokenConfig(getState))
+	.then(res => {
+
+		// dispatch(createMessage({
+		// 	addLead: 'Blog Added'
+		// 	}))
+
+		dispatch({
+			type: UPDATE_BLOG,
+			payload: res.data
+		})
+
+	})
+	.catch(err =>
+
+			{
+				console.log("update error", err)
+			}
+		);
+}
+
+
+
+
+		// case 'post':
+
+		// 	return axios.post(`http://localhost:8000/api/`,{
+		// 		title: title,
+		// 		content: content
+		// 	})
+		// 	.then(res => console.log(res))
+		// 	.catch(error => console.log(error))
+
+		// case 'put':
+
+		// 	return axios.put(`http://localhost:8000/api/${articleID}/`,{
+		// 		title: title,
+		// 		content: content
+		// 	})
+		// 	.then(res => console.log(res))
+		// 	.catch(error => console.log(error))

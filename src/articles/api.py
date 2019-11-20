@@ -93,6 +93,7 @@ class BlogViewSet(viewsets.ModelViewSet):
 
 
 
+
 class AdminBlogViewSet(viewsets.ModelViewSet):
 	# # you need to remove this if you want to customize the blog to be only viewed by the creator - get_queryset
 	queryset = Blog.objects.all()

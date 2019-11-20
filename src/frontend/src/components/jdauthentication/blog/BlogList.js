@@ -7,6 +7,8 @@ import { Provider, connect } from 'react-redux'
 import { authCheckState  } from '../store/actions/auth'
 import { getBlogList, deleteBlog, addBlog, getBlog } from '../store/actions/Blog'
 import { Link, Redirect } from 'react-router-dom'
+import BlogAddForm from './BlogAddForm'
+
 
 //this is for cycling through every article
 
@@ -75,7 +77,7 @@ class BlogList extends Component {
 
 						</table>
 
-
+					<BlogAddForm id={this.props.match.params.blogID} />
 
 				</div>
 		)
