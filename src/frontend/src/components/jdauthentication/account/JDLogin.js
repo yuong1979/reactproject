@@ -65,7 +65,6 @@ export class JDLogin extends Component {
 
 
 
-
     const { username, password } = this.state
 
 
@@ -150,9 +149,9 @@ export class JDLogin extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.token !== null,
-  loading: state.loading,
-  error: state.error
+  isAuthenticated: state.auth.token !== null,
+  loading: state.auth.loading,
+  error: state.auth.error
 })
 
 

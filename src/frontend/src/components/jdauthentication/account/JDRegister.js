@@ -178,8 +178,8 @@ export class JDRegister extends Component {
 
 const mapStateToProps = state => ({
 
-  loading: state.loading,
-  error: state.error
+  loading: state.auth.loading,
+  error: state.auth.error
 })
 
 

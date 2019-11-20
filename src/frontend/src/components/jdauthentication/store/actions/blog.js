@@ -7,6 +7,36 @@ import { GET_BLOG, DELETE_BLOG, ADD_BLOG } from './actionTypes'
 
 
 
+
+
+// setup config with token - helper function
+
+export const tokenConfig = getState => {
+
+
+	// get token from the state
+	const token = getState().auth.token
+
+
+	//headers
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}
+
+	//if token exists, add to headers
+	if (token) {
+		config.headers['Authorisation'] = `Token ${token}`;
+
+	}
+
+	return config
+
+}
+
+
+
 // GET LEADS
 
 export const getBlog = () => (dispatch, getState) => {
@@ -15,21 +45,15 @@ export const getBlog = () => (dispatch, getState) => {
 	.then(res => {
 
 		dispatch({
-
 			type: GET_BLOG,
 			payload: res.data
-
 		})
-
-		// console.log(res)
 	})
 
 	.catch(err => {
 
 		console.log(err)
-
-		console.log("getblog", err)
-
+		
 		// dispatch(returnErrors(err.response.data, err.response.status));
 
 		// dispatch({
@@ -51,7 +75,7 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 	.then(res => {
 
 		dispatch(createMessage({
-			deleteLead: 'Blog Deleted'
+			deleteBlog: 'Blog Deleted'
 
 			}))
 
@@ -70,9 +94,9 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 
 // ADD LEADS
 
-export const addBlog = (lead) => (dispatch, getState) => {
+export const addBlog = (blog) => (dispatch, getState) => {
 
-	axios.post('/api/blog/', lead, tokenConfig(getState))
+	axios.post('/api/blog/', blog, tokenConfig(getState))
 	.then(res => {
 
 

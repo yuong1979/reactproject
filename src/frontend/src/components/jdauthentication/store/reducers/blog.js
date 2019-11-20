@@ -3,9 +3,7 @@ import { GET_BLOG, DELETE_BLOG, ADD_BLOG } from '../actions/actionTypes.js'
 const initialState = {
 
 	//the leads here are what you have in your backend that you feed in here
-	blogs: [
-		// {tester: true},
-	],
+	blogs: []
 	
 }
 
@@ -14,11 +12,7 @@ export default function (state = initialState, action ) {
 
 	switch (action.type) {
 
-
 		case GET_BLOG:
-
-		// console.log('get blog',action.payload)
-		
 		return {
 			...state,
 			blogs: action.payload
@@ -46,3 +40,4 @@ export default function (state = initialState, action ) {
 
 
 }
+

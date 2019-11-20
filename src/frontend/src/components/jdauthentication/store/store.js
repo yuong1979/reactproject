@@ -31,7 +31,7 @@ import thunk from 'redux-thunk'
 import reducer from './reducers/auth'
 import rootReducer from './reducers' //looking for index.js file inside reducers
 
-const initialState = {}
+// const initialState = {}
 
 
 const middleware = [thunk]
@@ -40,7 +40,7 @@ const middleware = [thunk]
 const store = createStore(
 		// reducer,
 		rootReducer,
-		initialState,
+		// initialState,
 		composeWithDevTools(applyMiddleware(...middleware))
 	)
 
