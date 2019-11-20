@@ -7,7 +7,7 @@ import CustomForm from './Form'
 
 
 
-
+//this is for cycling through every article
 
 class Articles extends Component {
 

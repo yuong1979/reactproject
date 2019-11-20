@@ -21,7 +21,6 @@ export class JDMain extends Component {
   	// this state chaeck whether the token exists and if it is authorised
     this.props.onTryAutoSignup();
 
-	this.props.getBlog()
 
 
 	// if (this.props.isAuthenticated === true) {
@@ -98,47 +97,29 @@ export class JDMain extends Component {
 
 		return (
 
-
 			<Fragment>
-
 
 				<JDHeader {...this.props}/>
 
 				<br/>
 
-				<table className="table table-striped">
 
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Title</th>
-						<th>Description</th>
-						<th>User</th>
-						<th>Quantity</th>
-						<th>Active</th>
-						<th></th>
-					</tr>
-				</thead>
 
-				<tbody>
-					{ this.props.blogs.map(blog => (
-						<tr key = {blog.id}>
+				      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
 
-							<td>{blog.id}</td>
-							<td>{blog.title}</td>
-							<td>{blog.description}</td>
-							<td>{blog.user}</td>
-							<td>{blog.quantity}</td>
-							<td>{blog.active}</td>
+				        <li className="nav-item">
+				          <Link to="/test" className="nav-link">
+				            Articles
+				          </Link>
+				        </li>
 
-							<td><button onClick={this.props.deleteBlog.bind(this, blog.id)} className="btn btn-danger btn-sm">Delete</button></td>
+				        <li className="nav-item">
+				          <Link to="/jd/bloglist" className="nav-link">
+				            Blogs
+				          </Link>
+				        </li>
 
-						</tr>
-					)) }
-				</tbody>
-
-				</table>
-
+				      </ul>
 
 
 			</Fragment>
@@ -172,8 +153,8 @@ const mapDispatchToProps = dispatch => {
 
 
     // onTryAutoSignup: () => dispatch(actions.authCheckState()),
-    getBlog: () => dispatch(getBlog()),
-    deleteBlog: () => dispatch(deleteBlog()),
+    // getBlog: () => dispatch(getBlog()),
+    // deleteBlog: () => dispatch(deleteBlog()),
   }
 }
 

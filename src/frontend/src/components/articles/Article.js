@@ -2,6 +2,9 @@
 import React, {Component, Fragment} from 'react';
 import { Link } from 'react-router-dom'
 
+
+
+//this is for each article
 class Article extends Component {
 
 	render() {
@@ -11,10 +14,11 @@ class Article extends Component {
 				<div className="container">
 
 
+
 					<h1>{this.props.article.id}</h1>
 					<h1>{this.props.article.title}</h1>
 
-					<a href={`#/article/${this.props.article.id}`}> {this.props.article.title} </a>
+					<a href={`#/article/${this.props.article.id}`}> {this.props.article.title}</a>
 
 				</div>
 		)

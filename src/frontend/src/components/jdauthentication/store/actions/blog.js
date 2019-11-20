@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // import { tokenConfig } from './auth'
 
-import { GET_BLOG, DELETE_BLOG, ADD_BLOG } from './actionTypes'
+import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG } from './actionTypes'
 
 
 
@@ -37,15 +37,15 @@ export const tokenConfig = getState => {
 
 
 
-// GET LEADS
+// GET BLOGSLIST
 
-export const getBlog = () => (dispatch, getState) => {
+export const getBlogList = () => (dispatch, getState) => {
 
 	axios.get('/api/blog/', tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
-			type: GET_BLOG,
+			type: GET_BLOG_LIST,
 			payload: res.data
 		})
 	})
@@ -53,9 +53,7 @@ export const getBlog = () => (dispatch, getState) => {
 	.catch(err => {
 
 		console.log(err)
-		
 		// dispatch(returnErrors(err.response.data, err.response.status));
-
 		// dispatch({
 		// 	type: REGISTER_FAIL
 		// });
@@ -67,7 +65,38 @@ export const getBlog = () => (dispatch, getState) => {
 
 
 
-// DELETE LEADS
+// GET BLOG
+
+export const getBlog = (id) => (dispatch, getState) => {
+
+	console.log(`/api/blog/${id}`)
+
+	axios.get(`/api/blog/${id}`, tokenConfig(getState))
+
+	// axios.get('/api/blog/', tokenConfig(getState))
+	.then(res => {
+
+		dispatch({
+			type: GET_BLOG,
+			payload: res.data
+		})
+	})
+
+	.catch(err => {
+
+		console.log(err)
+		// dispatch(returnErrors(err.response.data, err.response.status));
+		// dispatch({
+		// 	type: REGISTER_FAIL
+		// });
+
+	})
+
+}
+
+
+
+// DELETE BLOGS
 
 export const deleteBlog = (id) => (dispatch, getState) => {
 
@@ -92,38 +121,32 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 
 
 
-// ADD LEADS
+// ADD BLOGS
 
 export const addBlog = (blog) => (dispatch, getState) => {
 
 	axios.post('/api/blog/', blog, tokenConfig(getState))
 	.then(res => {
 
-
 		// dispatch(createMessage({
 		// 	addLead: 'Blog Added'
 		// 	}))
 
-
 		dispatch({
-
 			type: ADD_BLOG,
 			payload: res.data
-
 		})
+
 	})
 	.catch(err =>
 
 		{
-
-
 			console.log("addblog", err)
 
 			// dispatch(returnErrors(
 			// 	err.response.data, 
 			// 	err.response.status
 			// 	))
-
 
 			// const errors = {
 			// 	msg: err.response.data,
@@ -134,7 +157,6 @@ export const addBlog = (blog) => (dispatch, getState) => {
 			// 	type: GET_ERRORS,
 			// 	payload: errors
 			// })
-
 
 		}
 		);

@@ -7,7 +7,8 @@ import JDMain from './JDMain'
 import JDLogin from './account/JDLogin'
 import JDRegister from './account/JDregister'
 
-
+import BlogDetail from './blog/BlogDetail'
+import BlogList from './blog/BlogList'
 
 export class JDRoute extends Component {
 
@@ -25,6 +26,9 @@ export class JDRoute extends Component {
 					<Route exact path='/jd/login' component={JDLogin} />
 					<Route exact path='/jd/register' component={JDRegister} />
 
+					<Route exact path="/jd/bloglist" component={BlogList} />
+					<Route exact path="/jd/blog/:blogID" component={BlogDetail} />
+
 				</Fragment>
 			</Provider>
 
@@ -41,3 +45,5 @@ export default JDRoute
 					// <Tester />
 
 
+					// <Route exact path="/article" component={Articles} />
+					// <Route exact path="/article/:articleID" component={ArticleDetail} />

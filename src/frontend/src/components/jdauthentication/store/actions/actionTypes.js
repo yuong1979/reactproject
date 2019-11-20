@@ -5,6 +5,7 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 export const AUTH_LOGIN = 'AUTH_LOGIN'
 
 
+export const GET_BLOG_LIST = 'GET_BLOG_LIST'
 export const GET_BLOG = 'GET_BLOG'
 export const DELETE_BLOG = 'DELETE_BLOG'
 export const ADD_BLOG = 'ADD_BLOG'

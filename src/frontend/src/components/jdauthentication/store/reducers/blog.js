@@ -1,9 +1,10 @@
-import { GET_BLOG, DELETE_BLOG, ADD_BLOG } from '../actions/actionTypes.js'
+import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG } from '../actions/actionTypes.js'
 
 const initialState = {
 
 	//the leads here are what you have in your backend that you feed in here
-	blogs: []
+	blogs: [],
+	blog: []
 	
 }
 
@@ -12,10 +13,16 @@ export default function (state = initialState, action ) {
 
 	switch (action.type) {
 
-		case GET_BLOG:
+		case GET_BLOG_LIST:
 		return {
 			...state,
 			blogs: action.payload
+		}
+
+		case GET_BLOG:
+		return {
+			...state,
+			blog: action.payload
 		}
 
 		case DELETE_BLOG:
@@ -41,3 +48,5 @@ export default function (state = initialState, action ) {
 
 }
 
+				// error: action.error,
+				// loading: false,
