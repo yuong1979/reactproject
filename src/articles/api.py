@@ -14,6 +14,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 # class ArticleListView(ListAPIView):
 # 	queryset = Article.objects.all()
@@ -50,11 +54,10 @@ class ArticleViewSet(viewsets.ModelViewSet):
 	]
 
 
-
-
 class BlogViewSet(viewsets.ModelViewSet):
 	# # you need to remove this if you want to customize the blog to be only viewed by the creator - get_queryset
 	# queryset = Blog.objects.all()
+	lookup_field = 'pk'
 	serializer_class = BlogSerializer
 
 	permission_classes = [
@@ -83,9 +86,11 @@ class BlogViewSet(viewsets.ModelViewSet):
 
 		# user can only update information only if they are staff
 		if self.request.user.is_staff:
+			print(f'is staff')
 			serializer.save(user=self.request.user)
 
 		else:
+			print(f'not staff')			
 			return None
 
 
