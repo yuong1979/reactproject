@@ -57,7 +57,7 @@ class BlogDetail extends Component {
 					<h5>User: {this.props.blog.user}</h5>
 
 
-					<BlogUpdateForm id={this.props.match.params.blogID} />
+					<BlogUpdateForm id={this.props.match.params.blogID} blog={this.props.blog} />
 
 				</div>
 		)

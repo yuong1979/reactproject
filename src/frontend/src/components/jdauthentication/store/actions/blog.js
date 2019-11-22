@@ -1,12 +1,37 @@
 import axios from 'axios';
+
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.xsrfCookieName = 'csrftoken';
+
 // import { createMessage, returnErrors } from './messages'
 
 // import { tokenConfig } from './auth'
+
+
+
+
+
+
 
 import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG } from './actionTypes'
 
 
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 
 // setup config with token - helper function
@@ -30,6 +55,11 @@ export const tokenConfig = getState => {
 		config.headers['Authorisation'] = `Token ${token}`;
 
 	}
+
+	console.log('XSRF-TOKEN')
+
+	var csrftoken = getCookie('XSRF-TOKEN');
+	config.headers['X-CSRFToken'] = `${csrftoken}`;
 
 	return config
 
@@ -204,3 +234,4 @@ export const updateBlog = (id, data) => (dispatch, getState) => {
 		// 	})
 		// 	.then(res => console.log(res))
 		// 	.catch(error => console.log(error))
+
