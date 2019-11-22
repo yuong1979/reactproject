@@ -5,16 +5,49 @@ import { Provider, connect } from 'react-redux'
 
 
 class BlogUpdateForm extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {title: props.blog.title,
+						description: props.blog.description,
+						date: props.blog.date,
+						quantity: props.blog.quantity,
+						active: props.blog.active,
+						upload:props.blog.upload
+
+					};
+
+		this.handleChange = this.handleChange.bind(this);
+    }
 
 
 	componentDidMount() {
-		const id = this.props.id
-		this.props.getBlog(id)
+		const id = this.props.id;
+		//this.state.blog = this.props.blog;
+		
+		/*this.setState({title: this.props.blog.title,
+			description: this.props.blog.description,
+			date: this.props.blog.date,
+			blog: this.props.blog,
+			quantity: this.props.blog.quantity,
+			active: this.props.blog.active,
+			upload:this.props.blog.upload
+
+		});
+		*/
 	}
 
 	componentDidUpdate(prevProps){
 
 	}
+
+	handleChange(event) {
+		const { target}  = event;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const { name }  = target;
+	
+		this.setState({ [name]: value });
+	
+	  }
 
 
 
@@ -36,7 +69,9 @@ class BlogUpdateForm extends Component {
 			description: description,
 			date: date,
 			quantity: quantity,
-			active: upload,
+			active: active,
+			upoad: upload,
+			user: this.props.blog.user 
 		}
 
 		this.props.updateBlog(id, data)
@@ -54,22 +89,22 @@ class BlogUpdateForm extends Component {
 					<br />
 						<form onSubmit={event => this.handleFormSubmit(event)}>
 
-							<input type="text" name="title" value={this.props.blog.title} />
+							<input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
 							<br />
 
-							<input type="text" name="description" value={this.props.blog.description} />
+							<input type="text" name="description" value={this.state.description} onChange={this.handleChange}/>
 							<br />
 
-							<input type="date" name="date" value={this.props.blog.date} />
+							<input type="date" name="date" value={this.state.date} onChange={this.handleChange}/>
 							<br />
 
-							<input type="number" name="quantity" value={this.props.blog.quantity} />
+							<input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange}/>
 							<br />
 
-							<input type="checkbox" name="active" value={this.props.blog.active} />
+							<input type="checkbox" name="active" value={this.state.active} onChange={this.handleChange}/>
 							<br />
 
-							<input type="text" name="upload" value={this.props.blog.upload} />
+							<input type="text" name="upload" value={this.state.upload} onChange={this.handleChange}/>
 							<br />
 
 							<button type="submit">Update</button>
