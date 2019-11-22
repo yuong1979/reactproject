@@ -1,4 +1,8 @@
 import axios from 'axios';
+
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.xsrfCookieName = 'csrftoken';
+
 // import { createMessage, returnErrors } from './messages'
 
 // import { tokenConfig } from './auth'
