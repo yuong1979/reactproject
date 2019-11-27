@@ -5,24 +5,30 @@ import { Provider, connect } from 'react-redux'
 
 class BlogAddForm extends Component {
 
+	constructor(props) {
+		super(props);
+
+	}
 
 
 	handleFormSubmit = (e) => {
 		e.preventDefault()
 
-		const title = e.target.elements.title.value
-		const description = e.target.elements.description.value
-		const date = e.target.elements.date.value
-		const quantity = e.target.elements.quantity.value
-		const active = e.target.elements.active.value
-		const upload = e.target.elements.upload.value
+		const title = e.target.elements.title.value;
+		const description = e.target.elements.description.value;
+		const date = e.target.elements.date.value;
+		const quantity = e.target.elements.quantity.value;
+		const active = e.target.elements.active.checked;
+		const upload = e.target.elements.upload.files[0] ? undefined : null;
 
 		const data = {
 			title: title,
 			description: description,
 			date: date,
 			quantity: quantity,
-			active: upload,
+			active: active,
+			upload: upload,
+			user: this.props.user,
 		}
 
 		this.props.addBlog(data)
@@ -38,7 +44,7 @@ class BlogAddForm extends Component {
 				<div className="container">
 
 					<br />
-						<form onSubmit={event => this.handleFormSubmit(event)}>
+						<form onSubmit={event => this.handleFormSubmit(event)} encType="multipart/form-data">
 
 							<input type="text" name="title" placeholder="title" />
 							<br />
@@ -55,7 +61,7 @@ class BlogAddForm extends Component {
 							<input type="checkbox" name="active" placeholder="" />
 							<br />
 
-							<input type="text" name="upload" placeholder="upload" />
+							<input type="file" name="upload"  />
 							<br />
 
 							<button type="submit">Add</button>
@@ -75,6 +81,7 @@ const mapStateToProps = state => {
 		// isAuthenticated: state.auth.token !== null,
 		// token: state.auth.token,
 		blog: state.blogs.blog,
+		user: state.auth.user,
 
 	}
 }
@@ -83,8 +90,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // onTryAutoSignup: () => dispatch(authCheckState()),
-
+    onTryAutoSignup: () => dispatch(authCheckState()),
     getBlog: (id) => dispatch(getBlog(id)),
     addBlog: (data) => dispatch(addBlog(data)),
   }

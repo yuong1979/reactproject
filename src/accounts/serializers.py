@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
 
 
 # user serializer
@@ -37,3 +38,9 @@ class LoginSerializer(serializers.Serializer):
 		if user and user.is_active:
 			return user
 		raise serializers.ValidationError("Incorrect Credentials")
+
+# Custom TokenSerializer shows user in additional to the key field
+class CustomTokenSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Token
+		fields = ('key', 'user')

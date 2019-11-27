@@ -150,7 +150,9 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 // ADD BLOGS
 
 export const addBlog = (blog) => (dispatch, getState) => {
-
+	let contentType = "multipart/form-data";
+	let config = tokenConfig(getState);
+	config.headers["Content-Type"] = contentType; //for fileField
 	axios.post('/api/blog/', blog, tokenConfig(getState))
 	.then(res => {
 

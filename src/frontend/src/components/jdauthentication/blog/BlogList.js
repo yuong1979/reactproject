@@ -17,7 +17,7 @@ class BlogList extends Component {
 
 	componentDidMount() {
 	    this.props.onTryAutoSignup();
-		this.props.getBlogList()
+		this.props.getBlogList();
 	}
 
 
@@ -92,6 +92,7 @@ const mapStateToProps = state => {
 		isAuthenticated: state.auth.token !== null,
 		token: state.auth.token,
 		blogs: state.blogs.blogs,
+		user: state.auth.user,
 
 	}
 }
