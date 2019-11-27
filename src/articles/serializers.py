@@ -23,6 +23,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
+	user = serializers.SerializerMethodField()
 	class Meta:
 		model = Blog
 		fields = ('id',
@@ -36,4 +37,7 @@ class BlogSerializer(serializers.ModelSerializer):
 				)
 
 		read_only_fields = ['id']
+
+	def get_user(self, obj):
+		return obj.user.username
 
