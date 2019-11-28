@@ -194,8 +194,10 @@ export const addBlog = (blog) => (dispatch, getState) => {
 // UPDATE BLOGS
 
 export const updateBlog = (id, data) => (dispatch, getState) => {
-
-	axios.put(`/api/blog/${id}/`, data, tokenConfig(getState))
+	let contentType = "multipart/form-data";
+	let config = tokenConfig(getState);
+	config.headers["Content-Type"] = contentType; //for fileField
+	axios.put(`/api/blog/${id}/`, data, config)
 	.then(res => {
 
 		// dispatch(createMessage({

@@ -7,7 +7,24 @@ class BlogAddForm extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state ={
+			upload:null,
+			image:null
+		}
 
+		this.onUploadChange = this.onUploadChange.bind(this);
+		this.onImageChange = this.onImageChange.bind(this);
+
+	}
+
+	onUploadChange(e) {
+		console.log("File: " + e.target.files[0]);
+		this.setState({upload: e.target.files[0]})
+	  }
+
+	onImageChange(e) {
+		console.log("Image: " + e.target.files[0]);
+		this.setState({image: e.target.files[0]})
 	}
 
 
@@ -19,17 +36,25 @@ class BlogAddForm extends Component {
 		const date = e.target.elements.date.value;
 		const quantity = e.target.elements.quantity.value;
 		const active = e.target.elements.active.checked;
-		const upload = e.target.elements.upload.files[0] ? undefined : null;
+		const upload = this.state.upload;
+		const image = this.state.image;
 
-		const data = {
-			title: title,
-			description: description,
-			date: date,
-			quantity: quantity,
-			active: active,
-			upload: upload,
-			user: this.props.user,
-		}
+		const data = new FormData();
+		data.append('title', title);
+		data.append('description', description);
+		data.append('date', date);
+		data.append('quantity', quantity);
+		data.append('active', active);
+		
+		console.log('File: ' + upload);
+		if (upload)
+			data.append('upload',  upload);
+		
+			console.log('image: ' + image);
+		if (image)
+			data.append('image', image);
+
+		data.append('user',this.props.user);
 
 		this.props.addBlog(data)
 
@@ -61,10 +86,13 @@ class BlogAddForm extends Component {
 							<input type="checkbox" name="active" placeholder="" />
 							<br />
 
-							<input type="file" name="upload"  />
+							<span>File: </span><input type="file" name="upload" onChange={this.onUploadChange} />
 							<br />
 
-							<button type="submit">Add</button>
+							<span>Image: </span><input type="file" name="image" accept=".gif,.jpg,.jpeg,.png" onChange={this.onImageChange}/>
+							<br />
+
+							<button type="submit">Add me</button>
 
 						</form>
 					<br />

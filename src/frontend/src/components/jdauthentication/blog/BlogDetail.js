@@ -55,7 +55,11 @@ class BlogDetail extends Component {
 					<h5>Quantity: {this.props.blog.quantity}</h5>
 					<br />
 					<h5>User: {this.props.blog.user}</h5>
+					<br />
 
+					{ (this.props.blog.image) &&
+						(<img src={this.props.blog.image} />)
+					}
 
 					<BlogUpdateForm id={this.props.match.params.blogID} blog={this.props.blog} />
 

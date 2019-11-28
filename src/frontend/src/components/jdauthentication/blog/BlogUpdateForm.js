@@ -12,18 +12,31 @@ class BlogUpdateForm extends Component {
 						date: props.blog.date,
 						quantity: props.blog.quantity,
 						active: props.blog.active,
-						upload:props.blog.upload
+						upload:null,
+						image:null
 
 					};
-
 		this.handleChange = this.handleChange.bind(this);
-    }
+		this.onUploadChange = this.onUploadChange.bind(this);
+		this.onImageChange = this.onImageChange.bind(this);
+
+	}
+	
+	onUploadChange(e) {
+		console.log("File: " + e.target.files[0]);
+		this.setState({upload: e.target.files[0]})
+	  }
+
+	onImageChange(e) {
+		console.log("Image: " + e.target.files[0]);
+		this.setState({image: e.target.files[0]})
+	}
+
 
 
 	componentDidMount() {
 		const id = this.props.id;
-		//this.state.blog = this.props.blog;
-		
+			
 		/*this.setState({title: this.props.blog.title,
 			description: this.props.blog.description,
 			date: this.props.blog.date,
@@ -41,6 +54,7 @@ class BlogUpdateForm extends Component {
 	}
 
 	handleChange(event) {
+		
 		const { target}  = event;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const { name }  = target;
@@ -57,22 +71,30 @@ class BlogUpdateForm extends Component {
 		//passed from the blogdetail
 		const id = this.props.id
 
-		const title = e.target.elements.title.value
-		const description = e.target.elements.description.value
-		const date = e.target.elements.date.value
-		const quantity = e.target.elements.quantity.value
-		const active = e.target.elements.active.value
-		const upload = e.target.elements.upload.value
+		const title = e.target.elements.title.value;
+		const description = e.target.elements.description.value;
+		const date = e.target.elements.date.value;
+		const quantity = e.target.elements.quantity.value;
+		const active = e.target.elements.active.checked;
+		const upload = this.state.upload;
+		const image = this.state.image;
 
-		const data = {
-			title: title,
-			description: description,
-			date: date,
-			quantity: quantity,
-			active: active,
-			upoad: upload,
-			user: this.props.blog.user 
-		}
+		const data = new FormData();
+		data.append('title', title);
+		data.append('description', description);
+		data.append('date', date);
+		data.append('quantity', quantity);
+		data.append('active', active);
+		
+		console.log('upload' + upload);
+		if (upload)
+			data.append('upload',  upload);
+		
+			console.log('image ' + image);
+		if (image)
+			data.append('image', image);
+
+		data.append('user',this.props.blog.user);
 
 		this.props.updateBlog(id, data)
 
@@ -87,7 +109,7 @@ class BlogUpdateForm extends Component {
 				<div className="container">
 
 					<br />
-						<form onSubmit={event => this.handleFormSubmit(event)}>
+						<form onSubmit={event => this.handleFormSubmit(event)} encType="multipart/form-data">
 
 							<input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
 							<br />
@@ -104,7 +126,12 @@ class BlogUpdateForm extends Component {
 							<input type="checkbox" name="active" value={this.state.active} onChange={this.handleChange}/>
 							<br />
 
-							<input type="text" name="upload" value={this.state.upload} onChange={this.handleChange}/>
+							<span>File: </span><input type="file" name="upload" onChange={this.onUploadChange}/>
+							<span>{this.props.blog.upload}</span>
+							<br />
+
+							<input type="file" name="image"  onChange={this.onImageChange}/>
+							<span>{this.props.blog.image}</span>
 							<br />
 
 							<button type="submit">Update</button>
@@ -124,7 +151,7 @@ const mapStateToProps = state => {
 	return {
 		// isAuthenticated: state.auth.token !== null,
 		// token: state.auth.token,
-		blog: state.blogs.blog,
+		blog2: state.blogs.blog,
 
 	}
 }

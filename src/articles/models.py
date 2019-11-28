@@ -26,6 +26,7 @@ class Blog(models.Model):
 	quantity = models.IntegerField()
 	active = models.BooleanField()
 	upload = models.FileField(upload_to=user_directory_path, blank=True)
+	image = models.ImageField(upload_to=user_directory_path, blank=True)
 
 	def __str__(self):
 		return self.title

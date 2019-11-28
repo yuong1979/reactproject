@@ -33,7 +33,8 @@ class BlogSerializer(serializers.ModelSerializer):
 				'user',
 				'quantity',
 				'active',
-				'upload'
+				'upload',
+				'image'
 				)
 
 		read_only_fields = ['id']

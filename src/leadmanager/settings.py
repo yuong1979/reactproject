@@ -211,3 +211,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
