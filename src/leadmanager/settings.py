@@ -86,6 +86,8 @@ SITE_ID = 1
 
 
 REST_FRAMEWORK = {
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     # # below authentication is for knox
     # 'DEFAULT_AUTHENTICATION_CLASSES':
     # ('knox.auth.TokenAuthentication',)

@@ -13,15 +13,32 @@ import BlogAddForm from './BlogAddForm'
 //this is for cycling through every article
 
 class BlogList extends Component {
+	constructor(props) {
+		super(props);
 
+		this.state = {query:''}
+		this.onSearchChange = this.onSearchChange.bind(this);
+		
+	}
+
+
+	onSearchChange(e) {
+		this.setState(
+			{query:e.target.value},
+			() => {
+				console.log('query: ' + this.state.query);
+				this.props.doSearch(this.state.query);
+			   });
+	  }
 
 	componentDidMount() {
 	    this.props.onTryAutoSignup();
-		this.props.getBlogList();
+		this.props.getBlogList(this.state.query);
 	}
 
 
 	componentDidUpdate(prevProps){
+		
 
 	}
 
@@ -32,7 +49,7 @@ class BlogList extends Component {
 			return <Redirect to="/jd/login"/>
 		}
 
-		console.log('bloglist',this.props.blogs)
+		//console.log('bloglist',this.props.blogs)
 
 		return (
 				<div className="container">
@@ -40,6 +57,8 @@ class BlogList extends Component {
 					<br />
 
 					<h2>List of blogs</h2>
+
+						<div><form><input type="text" id="searchfield" placeholder="searchfield" onChange={this.onSearchChange}></input></form></div>
 
 						<table className="table table-striped">
 
@@ -68,7 +87,7 @@ class BlogList extends Component {
 									<td>{blog.active}</td>
 
 
-							<td><button className="btn btn-danger btn-sm"><a href={`#/jd/blog/${blog.id}`}> Details </a></button></td>
+							<td><button className="btn btn-danger btn-sm"><a href={`#/jd/blog/${blog.id}/`}> Details </a></button></td>
 
 							</tr>
 							)) }
@@ -101,7 +120,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(authCheckState()),
-    getBlogList: () => dispatch(getBlogList()),
+	getBlogList: () => dispatch(getBlogList()),
+	doSearch: query => dispatch(getBlogList(query)),
   }
 }
 

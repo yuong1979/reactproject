@@ -69,9 +69,11 @@ export const tokenConfig = getState => {
 
 // GET BLOGSLIST
 
-export const getBlogList = () => (dispatch, getState) => {
-
-	axios.get('/api/blog/', tokenConfig(getState))
+export const getBlogList = (query) => (dispatch, getState) => {
+	let url = '/api/blog/';
+	if (query)
+		url += '?search=' + query;
+	axios.get(url, tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
@@ -99,7 +101,7 @@ export const getBlogList = () => (dispatch, getState) => {
 
 export const getBlog = (id) => (dispatch, getState) => {
 
-	axios.get(`/api/blog/${id}`, tokenConfig(getState))
+	axios.get(`/api/blog/${id}/`, tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
