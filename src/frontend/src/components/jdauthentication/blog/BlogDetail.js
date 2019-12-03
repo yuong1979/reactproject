@@ -58,7 +58,7 @@ class BlogDetail extends Component {
 					<br />
 
 					{ (this.props.blog.image) &&
-						(<img src={this.props.blog.image} />)
+						(<img className='img-fluid' src={this.props.blog.image} />)
 					}
 
 					<BlogUpdateForm id={this.props.match.params.blogID} blog={this.props.blog} />
