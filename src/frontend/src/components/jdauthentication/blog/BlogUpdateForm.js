@@ -13,14 +13,25 @@ class BlogUpdateForm extends Component {
 						quantity: props.blog.quantity,
 						active: props.blog.active,
 						upload:null,
-						image:null
+						image:null,
+
+						descLength:0,
 
 					};
 		this.handleChange = this.handleChange.bind(this);
 		this.onUploadChange = this.onUploadChange.bind(this);
 		this.onImageChange = this.onImageChange.bind(this);
+		this.onDescriptionChange = this.onDescriptionChange.bind(this);
 
 	}
+
+	onDescriptionChange(e) {
+		this.setState({descLength:e.target.value.length,
+						description: e.target.value}
+					);
+		//this.setState({upload: e.target.files[0]})
+	  }
+
 	
 	onUploadChange(e) {
 		console.log("File: " + e.target.files[0]);
@@ -114,7 +125,13 @@ class BlogUpdateForm extends Component {
 							<input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
 							<br />
 
-							<input type="text" name="description" value={this.state.description} onChange={this.handleChange}/>
+							<input type="text" name="description" value={this.state.description} onChange={this.onDescriptionChange} maxLength="151"/>
+							{
+							(this.state.descLength > 150) &&
+							<span name="descMsg" className="alert alert-primary" role="alert" >
+  								Too many characters.
+							</span>
+							}
 							<br />
 
 							<input type="date" name="date" value={this.state.date} onChange={this.handleChange}/>
@@ -134,7 +151,7 @@ class BlogUpdateForm extends Component {
 							<span>{this.props.blog.image}</span>
 							<br />
 
-							<button type="submit">Update</button>
+							<button type="submit" disabled={(this.state.descLength > 150) ? "True" : null}>Update</button>
 
 						</form>
 					<br />

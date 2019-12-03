@@ -56,7 +56,6 @@ export const tokenConfig = getState => {
 
 	}
 
-	console.log('XSRF-TOKEN')
 
 	var csrftoken = getCookie('XSRF-TOKEN');
 	config.headers['X-CSRFToken'] = `${csrftoken}`;
