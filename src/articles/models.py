@@ -23,6 +23,7 @@ class Blog(models.Model):
 	description = models.TextField()
 	date = models.DateField()
 	user = models.ForeignKey(User, related_name="blog", on_delete=models.CASCADE,)
+	article = models.ForeignKey(Article, related_name="article", on_delete=models.DO_NOTHING, blank=True, null=True)
 	quantity = models.IntegerField()
 	active = models.BooleanField()
 	upload = models.FileField(upload_to=user_directory_path, blank=True)

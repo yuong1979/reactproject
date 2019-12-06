@@ -6,6 +6,7 @@ import { combineReducers } from  'redux';
 
 import auth from "./auth";
 import blogs from "./blog";
+import articles from "./article";
 
 
 // import tester from "./blog";
@@ -28,6 +29,7 @@ export default combineReducers({
 
 	auth: auth,
 	blogs: blogs,
+	articles: articles
 
 	// tester: tester,
 	// testing: testing,

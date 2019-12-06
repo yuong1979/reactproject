@@ -12,3 +12,5 @@ export const ADD_BLOG = 'ADD_BLOG'
 
 export const UPDATE_BLOG = 'UPDATE_BLOG'
 
+export const GET_ARTICLE_LIST = "GET_ARTICLE_LIST"
+

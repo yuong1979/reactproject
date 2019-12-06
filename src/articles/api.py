@@ -62,7 +62,7 @@ class BlogViewSet(viewsets.ModelViewSet):
 	lookup_field = 'pk'
 	serializer_class = BlogSerializer
 	#filter_backends = [filters.SearchFilter]
-	#filterset_fields = ['title', 'description', 'quantityß']
+	#filterset_fields = ['title', 'description', 'quantity']
 
 
 	permission_classes = [
