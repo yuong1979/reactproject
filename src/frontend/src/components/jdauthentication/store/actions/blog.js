@@ -56,7 +56,6 @@ export const tokenConfig = getState => {
 
 	}
 
-	console.log('XSRF-TOKEN')
 
 	var csrftoken = getCookie('XSRF-TOKEN');
 	config.headers['X-CSRFToken'] = `${csrftoken}`;
@@ -69,9 +68,11 @@ export const tokenConfig = getState => {
 
 // GET BLOGSLIST
 
-export const getBlogList = () => (dispatch, getState) => {
-
-	axios.get('/api/blog/', tokenConfig(getState))
+export const getBlogList = (query) => (dispatch, getState) => {
+	let url = '/api/blog/';
+	if (query)
+		url += '?search=' + query;
+	axios.get(url, tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
@@ -99,7 +100,7 @@ export const getBlogList = () => (dispatch, getState) => {
 
 export const getBlog = (id) => (dispatch, getState) => {
 
-	axios.get(`/api/blog/${id}`, tokenConfig(getState))
+	axios.get(`/api/blog/${id}/`, tokenConfig(getState))
 	.then(res => {
 
 		dispatch({
@@ -150,7 +151,9 @@ export const deleteBlog = (id) => (dispatch, getState) => {
 // ADD BLOGS
 
 export const addBlog = (blog) => (dispatch, getState) => {
-
+	let contentType = "multipart/form-data";
+	let config = tokenConfig(getState);
+	config.headers["Content-Type"] = contentType; //for fileField
 	axios.post('/api/blog/', blog, tokenConfig(getState))
 	.then(res => {
 
@@ -192,8 +195,10 @@ export const addBlog = (blog) => (dispatch, getState) => {
 // UPDATE BLOGS
 
 export const updateBlog = (id, data) => (dispatch, getState) => {
-
-	axios.put(`/api/blog/${id}/`, data, tokenConfig(getState))
+	let contentType = "multipart/form-data";
+	let config = tokenConfig(getState);
+	config.headers["Content-Type"] = contentType; //for fileField
+	axios.put(`/api/blog/${id}/`, data, config)
 	.then(res => {
 
 		// dispatch(createMessage({

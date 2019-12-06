@@ -10,15 +10,39 @@ import BlogUpdateForm from './BlogUpdateForm'
 
 
 class BlogDetail extends Component {
+	constructor(props) {
+		super(props);
 
+		this.state = {currentBlog: null}; 
+
+		this.props.onTryAutoSignup();
+		const id = this.props.match.params.blogID
+		this.props.getBlog(id)
+	}
 
 	componentDidMount() {
 
-    	this.props.onTryAutoSignup();
-		const id = this.props.match.params.blogID
+ 
+	}
 
-		this.props.getBlog(id)
+	shouldComponentUpdate(nextProps, nextState) {
+		console.log("old: " + this.props.blog.id + " new: " + nextProps.blog.id);
 
+		//this is to fix an issue that BlogUpdateForm component is rended before
+		//this.props.getBlog(id) returns, the BlogUpdateForm would contain an old blog 
+		//object from redux store
+		if (this.state.currentBlog == null && nextProps.blog)
+		{
+			this.setState({currentBlog: nextProps.blog});
+			return false;
+		}
+		else if ((this.state.currentBlog.id != nextProps.blog.id))
+		{
+			this.setState({currentBlog: nextProps.blog});
+			return false;
+		}
+
+		return true;
 	}
 
 
@@ -48,17 +72,28 @@ class BlogDetail extends Component {
 
 					<h1>Details</h1>
 					<br />
+					<h5>Id: {this.props.blog.id}</h5>
+					<br />
 					<h5>Title: {this.props.blog.title}</h5>
 					<br />
 					<h5>Description: {this.props.blog.description}</h5>
 					<br />
 					<h5>Quantity: {this.props.blog.quantity}</h5>
 					<br />
+					<h5>Active: {this.props.blog.active ? "yes" : "no"}</h5>
+					<br />
+					<h5>Article: {this.props.blog.articleTitle}</h5>
+					<br />
 					<h5>User: {this.props.blog.user}</h5>
+					<br />
 
+					{ (this.props.blog.image) &&
+						(<img className='img-fluid' src={this.props.blog.image} />)
+					}
 
-					<BlogUpdateForm id={this.props.match.params.blogID} blog={this.props.blog} />
-
+					{ (this.state.currentBlog) &&
+					<BlogUpdateForm id={this.props.blog.id} blog={this.state.currentBlog} />
+					}
 				</div>
 		)
 	}

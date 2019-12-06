@@ -4,6 +4,7 @@ import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT } from '../actions/act
 
 const initialState = {
 	token: localStorage.getItem('token'),
+	user: localStorage.getItem('user'),
 	error: null,
 	loading: false,
 	// testing: false,
@@ -27,6 +28,7 @@ export default function(state = initialState, action) {
 				...state,
 				...action.token,
 				token: action.token,
+				user: action.user,
 				error: null,
 				loading: false,
 			}
@@ -43,6 +45,7 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				token: null,
+				user: null,
 			}
 
 

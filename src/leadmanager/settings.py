@@ -86,6 +86,8 @@ SITE_ID = 1
 
 
 REST_FRAMEWORK = {
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     # # below authentication is for knox
     # 'DEFAULT_AUTHENTICATION_CLASSES':
     # ('knox.auth.TokenAuthentication',)
@@ -115,6 +117,10 @@ REST_FRAMEWORK = {
 
 
 
+}
+
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'accounts.serializers.CustomTokenSerializer',
 }
 
 
@@ -207,3 +213,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

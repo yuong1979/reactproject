@@ -16,6 +16,8 @@ from rest_framework.views import APIView
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import filters
+from django.db.models import Q
 
 
 
@@ -59,6 +61,9 @@ class BlogViewSet(viewsets.ModelViewSet):
 	# queryset = Blog.objects.all()
 	lookup_field = 'pk'
 	serializer_class = BlogSerializer
+	#filter_backends = [filters.SearchFilter]
+	#filterset_fields = ['title', 'description', 'quantity']
+
 
 	permission_classes = [
 		# permissions.AllowAny
@@ -73,7 +78,14 @@ class BlogViewSet(viewsets.ModelViewSet):
 
 	# customised queryset
 	def get_queryset(self):
-		return self.request.user.blog.all()
+		qs = self.request.user.blog.all()
+
+		query = self.request.GET.get('search')
+		
+		if query:			
+			qs = self.request.user.blog.filter(Q(title__icontains=query) | Q(description__icontains=query))
+		
+		return qs
 
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
