@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import axios from 'axios'
-import { getBlogList, deleteBlog, addBlog, getBlog, updateBlog } from '../store/actions/Blog'
+import { getBlogList, deleteBlog, addBlog, getBlog, updateBlog, deleteFile } from '../store/actions/Blog'
 import { getArticleList } from '../store/actions/article'
 import { Provider, connect } from 'react-redux'
 
@@ -17,7 +17,7 @@ class BlogUpdateForm extends Component {
 						article: props.blog.article,
 						upload:null,
 						image:null,
-
+						theInputKey: '1234',
 						descLength:0,
 
 					};
@@ -25,6 +25,8 @@ class BlogUpdateForm extends Component {
 		this.onUploadChange = this.onUploadChange.bind(this);
 		this.onImageChange = this.onImageChange.bind(this);
 		this.onDescriptionChange = this.onDescriptionChange.bind(this);
+		this.onFileDelete = this.onFileDelete.bind(this);
+		this.onImageDelete = this.onImageDelete.bind(this);
 
 	}
 
@@ -77,8 +79,32 @@ class BlogUpdateForm extends Component {
 		this.setState({ [name]: value });
 		
 		console.log({ [name]: value });
-	  }
+	}
 
+	onFileDelete(event) {
+		event.preventDefault();
+
+		this.props.deleteFile(this.props.id, {type: 'file'});
+
+		//let randomString = Math.random().toString(36);
+
+  		this.setState({
+    		theInputKey: ''
+  		});
+	}
+
+	onImageDelete(event) {
+		event.preventDefault();
+
+		this.props.deleteFile(this.props.id,{type:'image'});
+
+		//let randomString = Math.random().toString(36);
+
+  		this.setState({
+    		theInputKey: ''
+  		});
+		
+	}
 
 
 	handleFormSubmit = (e) => {
@@ -156,12 +182,18 @@ class BlogUpdateForm extends Component {
 							<br/>
 
 
-							<span>File: </span><input type="file" name="upload" onChange={this.onUploadChange}/>
+							<span>File: </span><input type="file" name="upload" onChange={this.onUploadChange} />
 							<span>{this.props.blog.upload}</span>
+							{ (this.props.blog.upload) &&
+								<span><button onClick={this.onFileDelete}>Delete</button></span>
+							}
 							<br />
 
-							<input type="file" name="image"  onChange={this.onImageChange}/>
+							<input type="file" name="image"  accept=".gif,.jpg,.jpeg,.png" onChange={this.onImageChange} />
 							<span>{this.props.blog.image}</span>
+							{ (this.props.blog.image) &&
+								<span><button onClick={this.onImageDelete}>Delete</button></span>
+							}
 							<br />
 
 							<button type="submit" disabled={(this.state.descLength > 150) ? "True" : null}>Update</button>
@@ -181,7 +213,7 @@ const mapStateToProps = state => {
 	return {
 		// isAuthenticated: state.auth.token !== null,
 		// token: state.auth.token,
-		blog2: state.blogs.blog,
+		blog: state.blogs.blog,
 		articles: state.articles.articles,
 
 	}
@@ -196,6 +228,7 @@ const mapDispatchToProps = dispatch => {
     getBlog: (id) => dispatch(getBlog(id)),
 	updateBlog: (id, data) => dispatch(updateBlog(id, data)),
 	getArticleList: () => dispatch(getArticleList()),
+	deleteFile: (id, data) => dispatch(deleteFile(id, data)),
   }
 }
 

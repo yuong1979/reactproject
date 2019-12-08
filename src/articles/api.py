@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
 # from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from articles.models import Article
 from .serializers import ArticleSerializer
@@ -18,6 +19,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import filters
 from django.db.models import Q
+
+import os
 
 
 
@@ -42,6 +45,11 @@ from django.db.models import Q
 # class ArticleDeleteView(DestroyAPIView):
 # 	queryset = Article.objects.all()
 # 	serializer_class = ArticleSerializer
+
+def _delete_file(path):
+    # Deletes file from filesystem.
+    if os.path.isfile(path):
+        os.remove(path)
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -74,7 +82,24 @@ class BlogViewSet(viewsets.ModelViewSet):
 	# You can use http://localhost:8000/api/ to find out the specific blogview set the user has authenication to when they are signed up or not signed up
 	authentication_classes = [SessionAuthentication, ]
 	
-	#try to insert a filter
+	@action(detail=False, methods=['PUT'], url_path='delete_uploadfile/(?P<blogId>\d+)', name='Delete upload files')
+	def delete_uploadfiles(self, request, *args, **kwargs):
+		if (kwargs['blogId']):
+			blog = request.user.blog.get(pk=kwargs['blogId'])
+			if blog:
+				dtype = request.data['type']
+				if ('file' in dtype):
+					if (blog.upload):
+						_delete_file(blog.upload.path)
+					blog.upload = ''
+					blog.save()
+				elif ('image' in dtype):
+					if (blog.image):
+						_delete_file(blog.image.path)
+					blog.image = ''
+					blog.save()
+			serializer = BlogSerializer(blog)
+			return Response(serializer.data)
 
 	# customised queryset
 	def get_queryset(self):

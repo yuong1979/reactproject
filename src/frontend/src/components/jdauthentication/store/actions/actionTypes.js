@@ -14,3 +14,5 @@ export const UPDATE_BLOG = 'UPDATE_BLOG'
 
 export const GET_ARTICLE_LIST = "GET_ARTICLE_LIST"
 
+export const DELETE_FILE = 'DELETE_FILE'
+

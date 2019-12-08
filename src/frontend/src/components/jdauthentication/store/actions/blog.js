@@ -13,7 +13,7 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 
 
 
-import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG } from './actionTypes'
+import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG, DELETE_FILE } from './actionTypes'
 
 
 
@@ -219,6 +219,22 @@ export const updateBlog = (id, data) => (dispatch, getState) => {
 		);
 }
 
+// DELETE upload file
+
+export const deleteFile = (id, data) => (dispatch, getState) => {
+
+	let config = tokenConfig(getState);
+	axios.put(`/api/blog/delete_uploadfile/${id}/`, data, config)
+	.then(res => {
+		dispatch({
+			type: DELETE_FILE,
+			payload: res.data
+		})
+	}).catch(err => 
+		console.log(err)
+	);
+
+}
 
 
 

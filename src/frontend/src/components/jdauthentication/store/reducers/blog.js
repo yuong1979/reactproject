@@ -1,4 +1,4 @@
-import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG } from '../actions/actionTypes.js'
+import { GET_BLOG_LIST, DELETE_BLOG, ADD_BLOG, GET_BLOG, UPDATE_BLOG, DELETE_FILE } from '../actions/actionTypes.js'
 
 const initialState = {
 
@@ -45,6 +45,11 @@ export default function (state = initialState, action ) {
 			// blogs: [...state.blogs, action.payload]
 		}
 
+		case DELETE_FILE:
+		return {
+			...state,
+			blog: action.payload
+		}
 
 		default:
 			return state;
